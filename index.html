@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crosshair Gallery</title>
+  <style>
+    :root{
+      --bg:#081224;
+      --panel:rgba(15,25,45,.82);
+      --panel2:rgba(19,33,58,.95);
+      --border:rgba(119,155,215,.18);
+      --text:#f4f8ff;
+      --muted:#98a7c7;
+      --accent:#5aa9ff;
+      --accent2:#7b61ff;
+      --shadow:0 14px 40px rgba(0,0,0,.28);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(84,138,255,.16), transparent 22%),
+        radial-gradient(circle at top right, rgba(110,76,255,.12), transparent 18%),
+        linear-gradient(180deg,#07101f 0%,#09172b 48%,#081324 100%);
+      min-height:100vh;
+    }
+    .shell{
+      width:min(1440px, calc(100% - 32px));
+      margin:0 auto;
+      padding:20px 0 40px;
+    }
+    .topbar{
+      position:sticky;
+      top:12px;
+      z-index:20;
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      background:rgba(8,18,36,.72);
+      border:1px solid var(--border);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      padding:18px;
+      margin-bottom:22px;
+    }
+    .topbar-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:260px;
+    }
+    .logo{
+      width:46px;
+      height:46px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      font-weight:800;
+      font-size:18px;
+      letter-spacing:1px;
+      color:#fff;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 10px 28px rgba(90,169,255,.34);
+      user-select:none;
+    }
+    .brand h1{
+      margin:0;
+      font-size:24px;
+      line-height:1.1;
+    }
+    .brand p{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .toolbar{
+      display:grid;
+      grid-template-columns:1.25fr .9fr .9fr auto;
+      gap:12px;
+      flex:1;
+      min-width:320px;
+    }
+    .field,.select,.btn{
+      height:46px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:var(--panel);
+      color:var(--text);
+      outline:none;
+      font-size:14px;
+    }
+    .field,.select{
+      width:100%;
+      padding:0 14px;
+    }
+    .field::placeholder{color:#7f91b5}
+    .btn{
+      padding:0 16px;
+      cursor:pointer;
+      font-weight:700;
+      transition:transform .16s ease,border-color .16s ease,background .16s ease,opacity .16s ease;
+    }
+    .btn:hover{
+      transform:translateY(-1px);
+      border-color:rgba(126,173,255,.36);
+      background:rgba(26,43,74,.96);
+    }
+    .btn.primary{
+      background:linear-gradient(135deg,rgba(90,169,255,.20),rgba(123,97,255,.18));
+    }
+    .filters{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .chip{
+      height:36px;
+      padding:0 14px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(13,25,46,.68);
+      color:var(--muted);
+      cursor:pointer;
+      transition:.16s ease;
+      font-weight:600;
+    }
+    .chip:hover,.chip.active{
+      color:#fff;
+      border-color:rgba(126,173,255,.45);
+      background:linear-gradient(135deg,rgba(90,169,255,.16),rgba(123,97,255,.12));
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+    .stats{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin:18px 0;
+      color:var(--muted);
+      font-size:14px;
+      flex-wrap:wrap;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+      gap:18px;
+    }
+    .card{
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(180deg,rgba(20,35,63,.96),rgba(14,28,52,.96));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+      cursor:pointer;
+    }
+    .card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(126,173,255,.42);
+      box-shadow:0 20px 48px rgba(0,0,0,.32);
+    }
+    .thumb-wrap{
+      padding:18px 18px 10px;
+    }
+    .thumb{
+      aspect-ratio:1/1;
+      border-radius:16px;
+      background:
+        linear-gradient(180deg,rgba(228,218,197,.86),rgba(193,181,160,.9)),
+        repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 10px,rgba(0,0,0,.02) 10px 20px);
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.05);
+      position:relative;
+    }
+    .thumb::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at center,rgba(255,255,255,.06),transparent 60%);
+      pointer-events:none;
+    }
+    .thumb img{
+      width:72%;
+      height:72%;
+      object-fit:contain;
+      image-rendering:auto;
+      filter:drop-shadow(0 0 10px rgba(0,0,0,.18));
+      user-select:none;
+      -webkit-user-drag:none;
+    }
+    .meta{
+      padding:0 16px 16px;
+      text-align:center;
+    }
+    .name{
+      font-weight:800;
+      font-size:18px;
+      line-height:1.2;
+      margin:6px 0 8px;
+      word-break:break-word;
+    }
+    .sub{
+      color:var(--muted);
+      font-size:12px;
+      display:flex;
+      justify-content:center;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+    .download-badge{
+      position:absolute;
+      top:12px;
+      right:12px;
+      font-size:12px;
+      font-weight:700;
+      color:#dfeaff;
+      background:rgba(6,16,29,.58);
+      border:1px solid rgba(255,255,255,.08);
+      padding:7px 10px;
+      border-radius:999px;
+      opacity:0;
+      transform:translateY(-4px);
+      transition:.16s ease;
+      pointer-events:none;
+    }
+    .card:hover .download-badge{
+      opacity:1;
+      transform:translateY(0);
+    }
+    .empty,.loading{
+      text-align:center;
+      padding:48px 20px;
+      color:var(--muted);
+      border-radius:24px;
+      background:rgba(13,25,46,.56);
+    }
+    .empty{
+      display:none;
+      border:1px dashed var(--border);
+    }
+    .empty.show{display:block}
+    .loading{
+      border:1px solid var(--border);
+      margin-bottom:14px;
+    }
+    .footer-note{
+      margin-top:22px;
+      color:#7d8fb5;
+      text-align:center;
+      font-size:13px;
+      line-height:1.6;
+    }
+    .hint{
+      color:#bfd1f5;
+      font-size:12px;
+    }
+    @media (max-width:980px){
+      .toolbar{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:640px){
+      .shell{width:min(100% - 20px,1440px)}
+      .topbar{top:8px;padding:14px;border-radius:18px}
+      .toolbar{grid-template-columns:1fr}
+      .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+      .name{font-size:16px}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <div class="topbar-row">
+        <div class="brand">
+          <div class="logo">CH</div>
+          <div>
+            <h1>Crosshair Gallery</h1>
+            <p>Bấm vào từng thẻ để tải PNG • Tự cập nhật từ GitHub repo</p>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <input id="searchInput" class="field" type="text" placeholder="Tìm theo tên file..." />
+          <select id="folderSelect" class="select">
+            <option value="all">Tất cả thư mục</option>
+          </select>
+          <select id="sortSelect" class="select">
+            <option value="name-asc">Tên A → Z</option>
+            <option value="name-desc">Tên Z → A</option>
+            <option value="folder">Theo thư mục</option>
+          </select>
+          <button id="resetBtn" class="btn primary">Đặt lại</button>
+        </div>
+      </div>
+
+      <div class="filters" id="quickFilters"></div>
+    </div>
+
+    <div class="stats">
+      <div id="resultText">Đang tải dữ liệu...</div>
+      <div id="repoText">Chưa cấu hình repo</div>
+    </div>
+
+    <div id="loadingBox" class="loading">Đang đọc danh sách ảnh từ GitHub...</div>
+    <div id="grid" class="grid"></div>
+    <div id="emptyState" class="empty">Không tìm thấy tâm ngắm phù hợp.</div>
+
+    <div class="footer-note">
+      Chỉ cần upload thêm PNG vào thư mục trong repo, website sẽ tự hiện ảnh mới sau khi GitHub Pages cập nhật.<br>
+      <span class="hint">Sửa mỗi phần GITHUB_CONFIG trong code là dùng được.</span>
+    </div>
+  </div>
+
+  <script>
+    const GITHUB_CONFIG = {
+      owner: "YOUR_GITHUB_USERNAME",
+      repo: "YOUR_REPO_NAME",
+      branch: "main",
+      folders: ["crosshair1", "crosshair2"],
+      prettifyNames: true
+    };
+
+    const grid = document.getElementById("grid");
+    const emptyState = document.getElementById("emptyState");
+    const resultText = document.getElementById("resultText");
+    const repoText = document.getElementById("repoText");
+    const loadingBox = document.getElementById("loadingBox");
+    const searchInput = document.getElementById("searchInput");
+    const folderSelect = document.getElementById("folderSelect");
+    const sortSelect = document.getElementById("sortSelect");
+    const resetBtn = document.getElementById("resetBtn");
+    const quickFilters = document.getElementById("quickFilters");
+
+    let allItems = [];
+
+    function prettifyName(filename) {
+      return filename
+        .replace(/\.[^/.]+$/, "")
+        .replace(/[_-]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function getDisplayName(filename) {
+      if (GITHUB_CONFIG.prettifyNames) return prettifyName(filename);
+      return filename.replace(/\.png$/i, "");
+    }
+
+    function normalize(text) {
+      return (text || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function uniqueFolders(items) {
+      return [...new Set(items.map(i => i.folder))].sort((a, b) => a.localeCompare(b));
+    }
+
+    function createChip(label, value) {
+      const btn = document.createElement("button");
+      btn.className = "chip";
+      btn.type = "button";
+      btn.textContent = label;
+      btn.addEventListener("click", () => {
+        folderSelect.value = value;
+        [...quickFilters.children].forEach(x => x.classList.remove("active"));
+        btn.classList.add("active");
+        render();
+      });
+      return btn;
+    }
+
+    function renderFolderOptions(items) {
+      const folders = uniqueFolders(items);
+
+      folderSelect.innerHTML = '<option value="all">Tất cả thư mục</option>';
+      folders.forEach(folder => {
+        const opt = document.createElement("option");
+        opt.value = folder;
+        opt.textContent = folder;
+        folderSelect.appendChild(opt);
+      });
+
+      quickFilters.innerHTML = "";
+      const allChip = createChip("Tất cả", "all");
+      allChip.classList.add("active");
+      quickFilters.appendChild(allChip);
+
+      folders.forEach(folder => {
+        quickFilters.appendChild(createChip(folder, folder));
+      });
+    }
+
+    function sortItems(items, mode) {
+      const arr = [...items];
+      if (mode === "name-desc") {
+        arr.sort((a, b) => b.name.localeCompare(a.name));
+      } else if (mode === "folder") {
+        arr.sort((a, b) => (a.folder + a.name).localeCompare(b.folder + b.name));
+      } else {
+        arr.sort((a, b) => a.name.localeCompare(b.name));
+      }
+      return arr;
+    }
+
+    function createCard(item) {
+      const card = document.createElement("article");
+      card.className = "card";
+      card.title = `Tải ${item.file}`;
+
+      card.innerHTML = `
+        <div class="download-badge">Download PNG</div>
+        <div class="thumb-wrap">
+          <div class="thumb">
+            <img loading="lazy" src="${item.path}" alt="${item.name}">
+          </div>
+        </div>
+        <div class="meta">
+          <div class="name">${item.name}</div>
+          <div class="sub">
+            <span>${item.folder}</span>
+            <span>•</span>
+            <span>.png</span>
+          </div>
+        </div>
+      `;
+
+      card.addEventListener("click", () => {
+        const a = document.createElement("a");
+        a.href = item.path;
+        a.download = item.file;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      });
+
+      return card;
+    }
+
+    function render() {
+      const keyword = normalize(searchInput.value);
+      const folder = folderSelect.value;
+      const sorted = sortItems(allItems, sortSelect.value);
+
+      const filtered = sorted.filter(item => {
+        const okKeyword =
+          !keyword ||
+          normalize(item.name).includes(keyword) ||
+          normalize(item.file).includes(keyword);
+        const okFolder = folder === "all" || item.folder === folder;
+        return okKeyword && okFolder;
+      });
+
+      grid.innerHTML = "";
+      filtered.forEach(item => grid.appendChild(createCard(item)));
+      emptyState.classList.toggle("show", filtered.length === 0);
+      resultText.textContent = `${filtered.length} / ${allItems.length} tâm ngắm`;
+    }
+
+    async function fetchFolderContents(folder) {
+      const url =
+        `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${encodeURIComponent(folder)}?ref=${encodeURIComponent(GITHUB_CONFIG.branch)}`;
+
+      const response = await fetch(url, {
+        headers: {
+          "Accept": "application/vnd.github+json"
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Không đọc được folder "${folder}" (${response.status}). Kiểm tra owner, repo, branch hoặc tên thư mục.`);
+      }
+
+      const data = await response.json();
+
+      return data
+        .filter(item => item.type === "file" && item.name.toLowerCase().endsWith(".png"))
+        .map(item => ({
+          file: item.name,
+          name: getDisplayName(item.name),
+          folder,
+          path: `${folder}/${item.name}`
+        }));
+    }
+
+    async function loadAllFolders() {
+      const folderPromises = GITHUB_CONFIG.folders.map(folder => fetchFolderContents(folder));
+      const results = await Promise.all(folderPromises);
+      return results.flat();
+    }
+
+    async function init() {
+      try {
+        if (
+          !GITHUB_CONFIG.owner ||
+          GITHUB_CONFIG.owner === "YOUR_GITHUB_USERNAME" ||
+          !GITHUB_CONFIG.repo ||
+          GITHUB_CONFIG.repo === "YOUR_REPO_NAME"
+        ) {
+          throw new Error("Bạn chưa sửa phần GITHUB_CONFIG trong index.html.");
+        }
+
+        repoText.textContent =
+          `${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo} • branch: ${GITHUB_CONFIG.branch}`;
+
+        const items = await loadAllFolders();
+        allItems = items;
+
+        renderFolderOptions(allItems);
+        render();
+        loadingBox.style.display = "none";
+      } catch (error) {
+        console.error(error);
+        loadingBox.style.display = "none";
+        resultText.textContent = "Không tải được dữ liệu.";
+        repoText.textContent = "Kiểm tra lại owner / repo / branch / folder";
+        emptyState.textContent = error.message;
+        emptyState.classList.add("show");
+      }
+    }
+
+    searchInput.addEventListener("input", render);
+
+    folderSelect.addEventListener("change", () => {
+      [...quickFilters.children].forEach(ch => {
+        const isAll = folderSelect.value === "all" && ch.textContent === "Tất cả";
+        ch.classList.toggle("active", ch.textContent === folderSelect.value || isAll);
+      });
+      render();
+    });
+
+    sortSelect.addEventListener("change", render);
+
+    resetBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      folderSelect.value = "all";
+      sortSelect.value = "name-asc";
+      [...quickFilters.children].forEach(ch => ch.classList.remove("active"));
+      if (quickFilters.firstElementChild) quickFilters.firstElementChild.classList.add("active");
+      render();
+    });
+
+    init();
+  </script>
+</body>
+</html>
