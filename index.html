@@ -3,197 +3,323 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Crosshair Gallery</title>
+  <title>GTA5S Crosshair</title>
   <style>
     :root{
-      --bg:#081224;
-      --panel:rgba(15,25,45,.82);
-      --panel2:rgba(19,33,58,.95);
-      --border:rgba(119,155,215,.18);
-      --text:#f4f8ff;
-      --muted:#98a7c7;
+      --bg:#07111f;
+      --bg2:#0a1628;
+      --panel:#0f1c31;
+      --panel2:#13233d;
+      --panel3:#1a2d4d;
+      --border:rgba(126,158,214,.16);
+      --border-strong:rgba(126,173,255,.34);
+      --text:#f3f7ff;
+      --muted:#9fb0cf;
       --accent:#5aa9ff;
       --accent2:#7b61ff;
       --shadow:0 14px 40px rgba(0,0,0,.28);
       --radius:18px;
+      --thumb-bg1:#c8bfab;
+      --thumb-bg2:#b4ab98;
     }
+
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
+
     body{
       margin:0;
       font-family:Inter,Segoe UI,Arial,sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at top left, rgba(84,138,255,.16), transparent 22%),
-        radial-gradient(circle at top right, rgba(110,76,255,.12), transparent 18%),
-        linear-gradient(180deg,#07101f 0%,#09172b 48%,#081324 100%);
+        radial-gradient(circle at top left, rgba(70,126,255,.16), transparent 24%),
+        radial-gradient(circle at top right, rgba(111,82,255,.12), transparent 18%),
+        linear-gradient(180deg,#060e1a 0%, #081324 40%, #07111f 100%);
       min-height:100vh;
     }
+
     .shell{
-      width:min(1440px, calc(100% - 32px));
+      width:min(1500px, calc(100% - 28px));
       margin:0 auto;
-      padding:20px 0 40px;
+      padding:16px 0 36px;
     }
+
     .topbar{
       position:sticky;
-      top:12px;
-      z-index:20;
-      backdrop-filter:blur(18px);
-      -webkit-backdrop-filter:blur(18px);
-      background:rgba(8,18,36,.72);
+      top:10px;
+      z-index:50;
       border:1px solid var(--border);
       border-radius:22px;
+      background:rgba(8,17,31,.78);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
       box-shadow:var(--shadow);
-      padding:18px;
-      margin-bottom:22px;
+      overflow:hidden;
     }
-    .topbar-row{
+
+    .topbar-main{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:18px;
+      padding:18px;
       flex-wrap:wrap;
     }
+
     .brand{
       display:flex;
       align-items:center;
       gap:14px;
       min-width:260px;
     }
+
     .logo{
-      width:46px;
-      height:46px;
+      width:48px;
+      height:48px;
       border-radius:14px;
       display:grid;
       place-items:center;
       font-weight:800;
       font-size:18px;
-      letter-spacing:1px;
       color:#fff;
       background:linear-gradient(135deg,var(--accent),var(--accent2));
-      box-shadow:0 10px 28px rgba(90,169,255,.34);
+      box-shadow:0 12px 30px rgba(90,169,255,.28);
       user-select:none;
     }
+
     .brand h1{
       margin:0;
       font-size:24px;
-      line-height:1.1;
+      line-height:1.05;
     }
+
     .brand p{
-      margin:4px 0 0;
-      color:var(--muted);
+      margin:5px 0 0;
       font-size:13px;
+      color:var(--muted);
     }
+
     .toolbar{
       display:grid;
-      grid-template-columns:1.25fr .9fr .9fr auto;
+      grid-template-columns:1.35fr .9fr .9fr auto;
       gap:12px;
       flex:1;
-      min-width:320px;
+      min-width:340px;
     }
+
     .field,.select,.btn{
       height:46px;
       border-radius:14px;
       border:1px solid var(--border);
-      background:var(--panel);
+      background:rgba(17,30,50,.95);
       color:var(--text);
       outline:none;
       font-size:14px;
     }
+
     .field,.select{
       width:100%;
       padding:0 14px;
     }
-    .field::placeholder{color:#7f91b5}
+
+    .field::placeholder{
+      color:#7f92b7;
+    }
+
     .btn{
       padding:0 16px;
       cursor:pointer;
       font-weight:700;
-      transition:transform .16s ease,border-color .16s ease,background .16s ease,opacity .16s ease;
+      transition:.18s ease;
     }
+
     .btn:hover{
       transform:translateY(-1px);
-      border-color:rgba(126,173,255,.36);
-      background:rgba(26,43,74,.96);
+      border-color:var(--border-strong);
+      background:#1a2c4c;
     }
+
     .btn.primary{
-      background:linear-gradient(135deg,rgba(90,169,255,.20),rgba(123,97,255,.18));
+      background:linear-gradient(135deg, rgba(90,169,255,.18), rgba(123,97,255,.16));
     }
-    .filters{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
+
+    .filters-wrap{
+      padding:0 18px 18px;
+      border-top:1px solid rgba(255,255,255,.04);
+      background:linear-gradient(180deg, rgba(255,255,255,.01), rgba(255,255,255,0));
+    }
+
+    .filter-group{
       margin-top:14px;
     }
+
+    .filter-title{
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.8px;
+      text-transform:uppercase;
+      color:#b7c6e4;
+      margin-bottom:10px;
+    }
+
+    .filters{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
     .chip{
       height:36px;
       padding:0 14px;
       border-radius:999px;
       border:1px solid var(--border);
-      background:rgba(13,25,46,.68);
+      background:rgba(12,24,43,.88);
       color:var(--muted);
       cursor:pointer;
       transition:.16s ease;
-      font-weight:600;
+      font-weight:700;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
     }
+
     .chip:hover,.chip.active{
       color:#fff;
-      border-color:rgba(126,173,255,.45);
-      background:linear-gradient(135deg,rgba(90,169,255,.16),rgba(123,97,255,.12));
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);
+      border-color:var(--border-strong);
+      background:linear-gradient(135deg, rgba(90,169,255,.16), rgba(123,97,255,.12));
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
     }
+
+    .chip-dot{
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      display:inline-block;
+      border:1px solid rgba(255,255,255,.18);
+    }
+
     .stats{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:12px;
-      margin:18px 0;
+      margin:18px 4px 14px;
       color:var(--muted);
       font-size:14px;
       flex-wrap:wrap;
     }
+
     .grid{
       display:grid;
       grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
       gap:18px;
     }
+
     .card{
       position:relative;
       overflow:hidden;
-      background:linear-gradient(180deg,rgba(20,35,63,.96),rgba(14,28,52,.96));
+      background:linear-gradient(180deg, rgba(20,35,63,.98), rgba(14,28,52,.98));
       border:1px solid var(--border);
-      border-radius:var(--radius);
+      border-radius:20px;
       box-shadow:var(--shadow);
-      transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+      transition:.18s ease;
       cursor:pointer;
+      isolation:isolate;
     }
+
     .card:hover{
       transform:translateY(-4px);
-      border-color:rgba(126,173,255,.42);
-      box-shadow:0 20px 48px rgba(0,0,0,.32);
+      border-color:var(--border-strong);
+      box-shadow:0 22px 50px rgba(0,0,0,.32);
     }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 30%);
+      pointer-events:none;
+    }
+
+    .card-top{
+      position:absolute;
+      top:10px;
+      left:10px;
+      right:10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:8px;
+      z-index:3;
+      pointer-events:none;
+    }
+
+    .tag-mini{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:800;
+      color:#e7efff;
+      background:rgba(7,17,30,.65);
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(8px);
+      pointer-events:auto;
+    }
+
+    .download-btn{
+      width:36px;
+      height:36px;
+      border:none;
+      border-radius:12px;
+      background:rgba(7,17,30,.72);
+      color:#eaf1ff;
+      display:grid;
+      place-items:center;
+      border:1px solid rgba(255,255,255,.08);
+      cursor:pointer;
+      transition:.18s ease;
+      pointer-events:auto;
+      opacity:.92;
+    }
+
+    .download-btn:hover{
+      background:rgba(28,48,83,.95);
+      transform:translateY(-1px);
+    }
+
+    .download-btn svg{
+      width:18px;
+      height:18px;
+      display:block;
+    }
+
     .thumb-wrap{
       padding:18px 18px 10px;
     }
+
     .thumb{
       aspect-ratio:1/1;
       border-radius:16px;
       background:
-        linear-gradient(180deg,rgba(228,218,197,.86),rgba(193,181,160,.9)),
-        repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 10px,rgba(0,0,0,.02) 10px 20px);
+        linear-gradient(180deg, rgba(228,218,197,.88), rgba(193,181,160,.92)),
+        repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0 10px, rgba(0,0,0,.02) 10px 20px);
       display:grid;
       place-items:center;
       overflow:hidden;
       border:1px solid rgba(255,255,255,.05);
       position:relative;
     }
+
     .thumb::after{
       content:"";
       position:absolute;
       inset:0;
-      background:radial-gradient(circle at center,rgba(255,255,255,.06),transparent 60%);
+      background:radial-gradient(circle at center, rgba(255,255,255,.06), transparent 60%);
       pointer-events:none;
     }
+
     .thumb img{
       width:72%;
       height:72%;
@@ -202,18 +328,26 @@
       filter:drop-shadow(0 0 10px rgba(0,0,0,.18));
       user-select:none;
       -webkit-user-drag:none;
+      transition:transform .18s ease;
     }
+
+    .card:hover .thumb img{
+      transform:scale(1.04);
+    }
+
     .meta{
       padding:0 16px 16px;
       text-align:center;
     }
+
     .name{
       font-weight:800;
       font-size:18px;
       line-height:1.2;
-      margin:6px 0 8px;
+      margin:8px 0 8px;
       word-break:break-word;
     }
+
     .sub{
       color:var(--muted);
       font-size:12px;
@@ -222,26 +356,7 @@
       gap:6px;
       flex-wrap:wrap;
     }
-    .download-badge{
-      position:absolute;
-      top:12px;
-      right:12px;
-      font-size:12px;
-      font-weight:700;
-      color:#dfeaff;
-      background:rgba(6,16,29,.58);
-      border:1px solid rgba(255,255,255,.08);
-      padding:7px 10px;
-      border-radius:999px;
-      opacity:0;
-      transform:translateY(-4px);
-      transition:.16s ease;
-      pointer-events:none;
-    }
-    .card:hover .download-badge{
-      opacity:1;
-      transform:translateY(0);
-    }
+
     .empty,.loading{
       text-align:center;
       padding:48px 20px;
@@ -249,32 +364,132 @@
       border-radius:24px;
       background:rgba(13,25,46,.56);
     }
+
     .empty{
       display:none;
       border:1px dashed var(--border);
     }
+
     .empty.show{display:block}
+
     .loading{
       border:1px solid var(--border);
       margin-bottom:14px;
     }
+
     .footer-note{
       margin-top:22px;
       color:#7d8fb5;
       text-align:center;
       font-size:13px;
-      line-height:1.6;
+      line-height:1.7;
     }
+
     .hint{
       color:#bfd1f5;
       font-size:12px;
     }
+
+    .preview{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      width:260px;
+      z-index:80;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:20px;
+      background:rgba(7,17,30,.86);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      box-shadow:0 24px 60px rgba(0,0,0,.38);
+      overflow:hidden;
+      opacity:0;
+      transform:translateY(10px);
+      pointer-events:none;
+      transition:.18s ease;
+    }
+
+    .preview.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .preview-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 14px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+
+    .preview-title{
+      font-size:13px;
+      font-weight:800;
+      color:#eaf0ff;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .preview-sub{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .preview-body{
+      padding:14px;
+    }
+
+    .preview-stage{
+      aspect-ratio:1/1;
+      border-radius:16px;
+      background:
+        linear-gradient(180deg, rgba(228,218,197,.88), rgba(193,181,160,.92)),
+        repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0 10px, rgba(0,0,0,.02) 10px 20px);
+      border:1px solid rgba(255,255,255,.05);
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+    }
+
+    .preview-stage img{
+      width:78%;
+      height:78%;
+      object-fit:contain;
+      filter:drop-shadow(0 0 14px rgba(0,0,0,.22));
+    }
+
+    .preview-tags{
+      margin-top:12px;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .preview-tag{
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:800;
+      color:#dce8ff;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    @media (max-width:1100px){
+      .preview{display:none}
+    }
+
     @media (max-width:980px){
       .toolbar{grid-template-columns:1fr 1fr}
     }
+
     @media (max-width:640px){
-      .shell{width:min(100% - 20px,1440px)}
-      .topbar{top:8px;padding:14px;border-radius:18px}
+      .shell{width:min(100% - 16px,1440px)}
+      .topbar{top:8px}
+      .topbar-main{padding:14px}
+      .filters-wrap{padding:0 14px 14px}
       .toolbar{grid-template-columns:1fr}
       .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
       .name{font-size:16px}
@@ -284,12 +499,12 @@
 <body>
   <div class="shell">
     <div class="topbar">
-      <div class="topbar-row">
+      <div class="topbar-main">
         <div class="brand">
           <div class="logo">CH</div>
           <div>
-            <h1>Crosshair Gallery</h1>
-            <p>Bấm vào từng thẻ để tải PNG • Tự cập nhật từ GitHub repo</p>
+            <h1>GTA5S Crosshair</h1>
+            <p>Chọn tâm ngắm, hover để xem preview lớn, bấm để tải PNG</p>
           </div>
         </div>
 
@@ -307,7 +522,22 @@
         </div>
       </div>
 
-      <div class="filters" id="quickFilters"></div>
+      <div class="filters-wrap">
+        <div class="filter-group">
+          <div class="filter-title">Thư mục</div>
+          <div class="filters" id="folderChips"></div>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-title">Màu sắc</div>
+          <div class="filters" id="colorChips"></div>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-title">Kiểu dáng</div>
+          <div class="filters" id="shapeChips"></div>
+        </div>
+      </div>
     </div>
 
     <div class="stats">
@@ -321,18 +551,60 @@
 
     <div class="footer-note">
       Chỉ cần upload thêm PNG vào thư mục trong repo, website sẽ tự hiện ảnh mới sau khi GitHub Pages cập nhật.<br>
-      <span class="hint">Sửa mỗi phần GITHUB_CONFIG trong code là dùng được.</span>
+      <span class="hint">Tên hiển thị được lấy theo logic tên file hiện tại.</span>
+    </div>
+  </div>
+
+  <div class="preview" id="previewBox">
+    <div class="preview-head">
+      <div>
+        <div class="preview-title" id="previewTitle">Preview</div>
+        <div class="preview-sub" id="previewSub">PNG</div>
+      </div>
+    </div>
+    <div class="preview-body">
+      <div class="preview-stage">
+        <img id="previewImg" src="" alt="">
+      </div>
+      <div class="preview-tags" id="previewTags"></div>
     </div>
   </div>
 
   <script>
     const GITHUB_CONFIG = {
-  owner: "gta5s",
-  repo: "GTA5S_Crosshair",
-  branch: "main",
-  folders: ["crosshair1"],
-  prettifyNames: true
-};
+      owner: "gta5s",
+      repo: "GTA5S_Crosshair",
+      branch: "main",
+      folders: ["crosshair1"],
+      prettifyNames: true
+    };
+
+    const COLOR_RULES = [
+      { key: "black", label: "Black", match: ["black"], swatch: "#111111" },
+      { key: "white", label: "White", match: ["white"], swatch: "#ffffff" },
+      { key: "blue", label: "Blue", match: ["blue"], swatch: "#3b82f6" },
+      { key: "cyan", label: "Cyan", match: ["cyan", "mint"], swatch: "#22d3ee" },
+      { key: "green", label: "Green", match: ["green", "greem"], swatch: "#22c55e" },
+      { key: "yellow", label: "Yellow", match: ["yellow"], swatch: "#facc15" },
+      { key: "orange", label: "Orange", match: ["orange"], swatch: "#fb923c" },
+      { key: "red", label: "Red", match: ["red"], swatch: "#ef4444" },
+      { key: "pink", label: "Pink", match: ["pink"], swatch: "#ec4899" },
+      { key: "purple", label: "Purple", match: ["purple", "amethyst"], swatch: "#a855f7" },
+      { key: "multi", label: "Multi", match: ["multicolor", "xmas"], swatch: "linear-gradient(90deg,#60a5fa,#22c55e,#f59e0b,#ef4444)" },
+      { key: "other", label: "Other", match: [], swatch: "#64748b" }
+    ];
+
+    const SHAPE_RULES = [
+      { key: "dot", label: "Dot", match: ["dot", "db"] },
+      { key: "cross", label: "Cross", match: ["cross", "crossair", "chuthap"] },
+      { key: "x", label: "X", match: ["_x", " x", "-x", "x2"] },
+      { key: "halo", label: "Halo", match: ["halo"] },
+      { key: "circle", label: "Circle", match: ["circle", "ring"] },
+      { key: "plus", label: "Plus", match: ["plus"] },
+      { key: "special", label: "Special", match: ["ferris", "windmill", "glasses", "diamond", "ns", "unknown", "image", "layer"] },
+      { key: "other", label: "Other", match: [] }
+    ];
+
     const grid = document.getElementById("grid");
     const emptyState = document.getElementById("emptyState");
     const resultText = document.getElementById("resultText");
@@ -342,9 +614,21 @@
     const folderSelect = document.getElementById("folderSelect");
     const sortSelect = document.getElementById("sortSelect");
     const resetBtn = document.getElementById("resetBtn");
-    const quickFilters = document.getElementById("quickFilters");
+
+    const folderChips = document.getElementById("folderChips");
+    const colorChips = document.getElementById("colorChips");
+    const shapeChips = document.getElementById("shapeChips");
+
+    const previewBox = document.getElementById("previewBox");
+    const previewTitle = document.getElementById("previewTitle");
+    const previewSub = document.getElementById("previewSub");
+    const previewImg = document.getElementById("previewImg");
+    const previewTags = document.getElementById("previewTags");
 
     let allItems = [];
+    let activeFolder = "all";
+    let activeColor = "all";
+    let activeShape = "all";
 
     function prettifyName(filename) {
       return filename
@@ -366,25 +650,50 @@
         .replace(/[\u0300-\u036f]/g, "");
     }
 
+    function detectByRules(filename, rules) {
+      const n = normalize(filename);
+      for (const rule of rules) {
+        if (rule.key === "other") continue;
+        if (rule.match.some(k => n.includes(k))) {
+          return rule.key;
+        }
+      }
+      return "other";
+    }
+
+    function getColorMeta(colorKey) {
+      return COLOR_RULES.find(r => r.key === colorKey) || COLOR_RULES[COLOR_RULES.length - 1];
+    }
+
+    function getShapeMeta(shapeKey) {
+      return SHAPE_RULES.find(r => r.key === shapeKey) || SHAPE_RULES[SHAPE_RULES.length - 1];
+    }
+
     function uniqueFolders(items) {
       return [...new Set(items.map(i => i.folder))].sort((a, b) => a.localeCompare(b));
     }
 
-    function createChip(label, value) {
+    function createChip(label, value, activeValue, onClick, dotStyle = null) {
       const btn = document.createElement("button");
-      btn.className = "chip";
+      btn.className = "chip" + (value === activeValue ? " active" : "");
       btn.type = "button";
-      btn.textContent = label;
-      btn.addEventListener("click", () => {
-        folderSelect.value = value;
-        [...quickFilters.children].forEach(x => x.classList.remove("active"));
-        btn.classList.add("active");
-        render();
-      });
+
+      if (dotStyle) {
+        const dot = document.createElement("span");
+        dot.className = "chip-dot";
+        dot.style.background = dotStyle;
+        btn.appendChild(dot);
+      }
+
+      const span = document.createElement("span");
+      span.textContent = label;
+      btn.appendChild(span);
+
+      btn.addEventListener("click", () => onClick(value));
       return btn;
     }
 
-    function renderFolderOptions(items) {
+    function renderFolderFilters(items) {
       const folders = uniqueFolders(items);
 
       folderSelect.innerHTML = '<option value="all">Tất cả thư mục</option>';
@@ -395,13 +704,49 @@
         folderSelect.appendChild(opt);
       });
 
-      quickFilters.innerHTML = "";
-      const allChip = createChip("Tất cả", "all");
-      allChip.classList.add("active");
-      quickFilters.appendChild(allChip);
+      folderChips.innerHTML = "";
+      folderChips.appendChild(createChip("Tất cả", "all", activeFolder, (value) => {
+        activeFolder = value;
+        folderSelect.value = value;
+        renderAll();
+      }));
 
       folders.forEach(folder => {
-        quickFilters.appendChild(createChip(folder, folder));
+        folderChips.appendChild(createChip(folder, folder, activeFolder, (value) => {
+          activeFolder = value;
+          folderSelect.value = value;
+          renderAll();
+        }));
+      });
+    }
+
+    function renderColorFilters() {
+      colorChips.innerHTML = "";
+      colorChips.appendChild(createChip("Tất cả", "all", activeColor, (value) => {
+        activeColor = value;
+        renderAll();
+      }));
+
+      COLOR_RULES.forEach(rule => {
+        colorChips.appendChild(createChip(rule.label, rule.key, activeColor, (value) => {
+          activeColor = value;
+          renderAll();
+        }, rule.swatch));
+      });
+    }
+
+    function renderShapeFilters() {
+      shapeChips.innerHTML = "";
+      shapeChips.appendChild(createChip("Tất cả", "all", activeShape, (value) => {
+        activeShape = value;
+        renderAll();
+      }));
+
+      SHAPE_RULES.forEach(rule => {
+        shapeChips.appendChild(createChip(rule.label, rule.key, activeShape, (value) => {
+          activeShape = value;
+          renderAll();
+        }));
       });
     }
 
@@ -417,58 +762,136 @@
       return arr;
     }
 
+    function downloadItem(item) {
+      const a = document.createElement("a");
+      a.href = item.path;
+      a.download = item.file;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    function showPreview(item) {
+      previewTitle.textContent = item.name;
+      previewSub.textContent = `${item.folder} • ${item.file}`;
+      previewImg.src = item.path;
+      previewImg.alt = item.name;
+
+      const colorMeta = getColorMeta(item.color);
+      const shapeMeta = getShapeMeta(item.shape);
+
+      previewTags.innerHTML = `
+        <div class="preview-tag">${colorMeta.label}</div>
+        <div class="preview-tag">${shapeMeta.label}</div>
+        <div class="preview-tag">${item.folder}</div>
+      `;
+
+      previewBox.classList.add("show");
+    }
+
+    function hidePreview() {
+      previewBox.classList.remove("show");
+    }
+
     function createCard(item) {
+      const colorMeta = getColorMeta(item.color);
+      const shapeMeta = getShapeMeta(item.shape);
+
       const card = document.createElement("article");
       card.className = "card";
       card.title = `Tải ${item.file}`;
 
       card.innerHTML = `
-        <div class="download-badge">Download PNG</div>
+        <div class="card-top">
+          <div class="tag-mini">
+            <span class="chip-dot" style="background:${colorMeta.swatch}"></span>
+            <span>${colorMeta.label}</span>
+          </div>
+          <button class="download-btn" type="button" aria-label="Download PNG">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3v11"></path>
+              <path d="M7 10l5 5 5-5"></path>
+              <path d="M5 21h14"></path>
+            </svg>
+          </button>
+        </div>
+
         <div class="thumb-wrap">
           <div class="thumb">
             <img loading="lazy" src="${item.path}" alt="${item.name}">
           </div>
         </div>
+
         <div class="meta">
           <div class="name">${item.name}</div>
           <div class="sub">
-            <span>${item.folder}</span>
+            <span>${shapeMeta.label}</span>
             <span>•</span>
-            <span>.png</span>
+            <span>${item.folder}</span>
           </div>
         </div>
       `;
 
-      card.addEventListener("click", () => {
-        const a = document.createElement("a");
-        a.href = item.path;
-        a.download = item.file;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
+      const downloadBtn = card.querySelector(".download-btn");
+      downloadBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        downloadItem(item);
       });
+
+      card.addEventListener("click", () => downloadItem(item));
+      card.addEventListener("mouseenter", () => showPreview(item));
+      card.addEventListener("mouseleave", hidePreview);
 
       return card;
     }
 
-    function render() {
+    function getFilteredItems() {
       const keyword = normalize(searchInput.value);
-      const folder = folderSelect.value;
       const sorted = sortItems(allItems, sortSelect.value);
 
-      const filtered = sorted.filter(item => {
+      return sorted.filter(item => {
         const okKeyword =
           !keyword ||
           normalize(item.name).includes(keyword) ||
           normalize(item.file).includes(keyword);
-        const okFolder = folder === "all" || item.folder === folder;
-        return okKeyword && okFolder;
+
+        const okFolder = activeFolder === "all" || item.folder === activeFolder;
+        const okColor = activeColor === "all" || item.color === activeColor;
+        const okShape = activeShape === "all" || item.shape === activeShape;
+
+        return okKeyword && okFolder && okColor && okShape;
+      });
+    }
+
+    function syncActiveChips() {
+      [...folderChips.children].forEach(ch => {
+        ch.classList.toggle("active", ch.textContent.trim() === activeFolder || (activeFolder === "all" && ch.textContent.trim() === "Tất cả"));
       });
 
+      [...colorChips.children].forEach(ch => {
+        const label = ch.textContent.trim();
+        const target = COLOR_RULES.find(r => r.label === label)?.key;
+        ch.classList.toggle("active", (activeColor === "all" && label === "Tất cả") || target === activeColor);
+      });
+
+      [...shapeChips.children].forEach(ch => {
+        const label = ch.textContent.trim();
+        const target = SHAPE_RULES.find(r => r.label === label)?.key;
+        ch.classList.toggle("active", (activeShape === "all" && label === "Tất cả") || target === activeShape);
+      });
+    }
+
+    function renderGrid() {
+      const filtered = getFilteredItems();
       grid.innerHTML = "";
       filtered.forEach(item => grid.appendChild(createCard(item)));
       emptyState.classList.toggle("show", filtered.length === 0);
       resultText.textContent = `${filtered.length} / ${allItems.length} tâm ngắm`;
+      syncActiveChips();
+    }
+
+    function renderAll() {
+      renderGrid();
     }
 
     async function fetchFolderContents(folder) {
@@ -489,12 +912,19 @@
 
       return data
         .filter(item => item.type === "file" && item.name.toLowerCase().endsWith(".png"))
-        .map(item => ({
-          file: item.name,
-          name: getDisplayName(item.name),
-          folder,
-          path: `${folder}/${item.name}`
-        }));
+        .map(item => {
+          const color = detectByRules(item.name, COLOR_RULES);
+          const shape = detectByRules(item.name, SHAPE_RULES);
+
+          return {
+            file: item.name,
+            name: getDisplayName(item.name),
+            folder,
+            path: `${folder}/${item.name}`,
+            color,
+            shape
+          };
+        });
     }
 
     async function loadAllFolders() {
@@ -505,23 +935,15 @@
 
     async function init() {
       try {
-        if (
-          !GITHUB_CONFIG.owner ||
-          GITHUB_CONFIG.owner === "YOUR_GITHUB_USERNAME" ||
-          !GITHUB_CONFIG.repo ||
-          GITHUB_CONFIG.repo === "YOUR_REPO_NAME"
-        ) {
-          throw new Error("Bạn chưa sửa phần GITHUB_CONFIG trong index.html.");
-        }
-
-        repoText.textContent =
-          `${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo} • branch: ${GITHUB_CONFIG.branch}`;
-
+        repoText.textContent = `${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo} • branch: ${GITHUB_CONFIG.branch}`;
         const items = await loadAllFolders();
         allItems = items;
 
-        renderFolderOptions(allItems);
-        render();
+        renderFolderFilters(allItems);
+        renderColorFilters();
+        renderShapeFilters();
+        renderAll();
+
         loadingBox.style.display = "none";
       } catch (error) {
         console.error(error);
@@ -533,26 +955,26 @@
       }
     }
 
-    searchInput.addEventListener("input", render);
+    searchInput.addEventListener("input", renderAll);
 
     folderSelect.addEventListener("change", () => {
-      [...quickFilters.children].forEach(ch => {
-        const isAll = folderSelect.value === "all" && ch.textContent === "Tất cả";
-        ch.classList.toggle("active", ch.textContent === folderSelect.value || isAll);
-      });
-      render();
+      activeFolder = folderSelect.value;
+      renderAll();
     });
 
-    sortSelect.addEventListener("change", render);
+    sortSelect.addEventListener("change", renderAll);
 
     resetBtn.addEventListener("click", () => {
       searchInput.value = "";
       folderSelect.value = "all";
       sortSelect.value = "name-asc";
-      [...quickFilters.children].forEach(ch => ch.classList.remove("active"));
-      if (quickFilters.firstElementChild) quickFilters.firstElementChild.classList.add("active");
-      render();
+      activeFolder = "all";
+      activeColor = "all";
+      activeShape = "all";
+      renderAll();
     });
+
+    document.addEventListener("mouseleave", hidePreview);
 
     init();
   </script>
