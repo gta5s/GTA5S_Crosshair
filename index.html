@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GTA5S Crosshair</title>
+  <title>GTA5S Crosshair - GTA5S.NET</title>
   <style>
     :root{
       --bg:#07111f;
@@ -392,30 +392,27 @@
 
     .preview{
   position:fixed;
-  left:50%;
-  top:50%;
-  transform:translate(-50%, -40%) scale(.96);
-  width:320px;
+  left:0;
+  top:0;
+  width:280px;
   z-index:200;
-
   border:1px solid rgba(255,255,255,.10);
   border-radius:20px;
   background:rgba(7,17,30,.92);
-
   backdrop-filter:blur(16px);
   -webkit-backdrop-filter:blur(16px);
-
-  box-shadow:0 40px 120px rgba(0,0,0,.55);
-
+  box-shadow:0 24px 60px rgba(0,0,0,.38);
   overflow:hidden;
   opacity:0;
+  transform:translateY(8px) scale(.98);
   pointer-events:none;
-  transition:.18s ease;
+  transition:opacity .16s ease, transform .16s ease;
+  will-change:left, top, opacity, transform;
 }
 
-    .preview.show{
+.preview.show{
   opacity:1;
-  transform:translate(-50%, -50%) scale(1);
+  transform:translateY(0) scale(1);
 }
 
     .preview-head{
@@ -498,6 +495,14 @@
       .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
       .name{font-size:16px}
     }
+
+    .logo-img{
+  width:88px;
+  height:88px;
+  object-fit:contain;
+  filter:drop-shadow(0 0 8px rgba(90,169,255,.4));
+}
+
   </style>
 </head>
 <body>
@@ -505,17 +510,18 @@
     <div class="topbar">
       <div class="topbar-main">
         <div class="brand">
-          <div class="logo">CH</div>
+          <img src="assets/logo.png" class="logo-img">
           <div>
-            <h1>GTA5S Crosshair</h1>
-            <p>Chọn tâm ngắm, hover để xem preview lớn, bấm để tải PNG</p>
+            <h1>GTA5S Crosshair Library</h1>
+            <p>Thư viện tâm ngắm ảo miễn phí độc quyền tại GTA5S.NET</p>
+            <p>Hãy lựa chọn và tải xuống tâm ngắm bạn thích rồi làm theo hướng dẫn tại discord!</p>
           </div>
         </div>
 
         <div class="toolbar">
-          <input id="searchInput" class="field" type="text" placeholder="Tìm theo tên file..." />
+          <input id="searchInput" class="field" type="text" placeholder="Tìm theo tên tâm ngắm ..." />
           <select id="folderSelect" class="select">
-            <option value="all">Tất cả thư mục</option>
+            <option value="all">Tất cả tâm ngắm</option>
           </select>
           <select id="sortSelect" class="select">
             <option value="name-asc">Tên A → Z</option>
@@ -546,16 +552,15 @@
 
     <div class="stats">
       <div id="resultText">Đang tải dữ liệu...</div>
-      <div id="repoText">Chưa cấu hình repo</div>
     </div>
 
-    <div id="loadingBox" class="loading">Đang đọc danh sách ảnh từ GitHub...</div>
+    <div id="loadingBox" class="loading">Đang tải dữ liệu tâm ngắm mới từ GTA5S.NET ...</div>
     <div id="grid" class="grid"></div>
     <div id="emptyState" class="empty">Không tìm thấy tâm ngắm phù hợp.</div>
 
     <div class="footer-note">
-      Chỉ cần upload thêm PNG vào thư mục trong repo, website sẽ tự hiện ảnh mới sau khi GitHub Pages cập nhật.<br>
-      <span class="hint">Tên hiển thị được lấy theo logic tên file hiện tại.</span>
+      GTA5S Crosshair Library - Bản quyền thuộc GTA5S - Copyright by GTA5S.NET© 2026<br>
+      <span class="hint">Website Thư Viện Tâm Ngắm Ảo - Phát Triển Chính Thức bởi KAYC</span>
     </div>
   </div>
 
@@ -579,7 +584,7 @@
       owner: "gta5s",
       repo: "GTA5S_Crosshair",
       branch: "main",
-      folders: ["crosshair1"],
+      folders: ["GTA5S_Crosshair"],
       prettifyNames: true
     };
 
@@ -612,7 +617,6 @@
     const grid = document.getElementById("grid");
     const emptyState = document.getElementById("emptyState");
     const resultText = document.getElementById("resultText");
-    const repoText = document.getElementById("repoText");
     const loadingBox = document.getElementById("loadingBox");
     const searchInput = document.getElementById("searchInput");
     const folderSelect = document.getElementById("folderSelect");
@@ -775,23 +779,45 @@
       a.remove();
     }
 
-    function showPreview(item) {
-      previewTitle.textContent = item.name;
-      previewSub.textContent = `${item.folder} • ${item.file}`;
-      previewImg.src = item.path;
-      previewImg.alt = item.name;
+    function showPreview(item, event) {
+  previewTitle.textContent = item.name;
+  previewSub.textContent = `${item.folder} • ${item.file}`;
+  previewImg.src = item.path;
+  previewImg.alt = item.name;
 
-      const colorMeta = getColorMeta(item.color);
-      const shapeMeta = getShapeMeta(item.shape);
+  const colorMeta = getColorMeta(item.color);
+  const shapeMeta = getShapeMeta(item.shape);
 
-      previewTags.innerHTML = `
-        <div class="preview-tag">${colorMeta.label}</div>
-        <div class="preview-tag">${shapeMeta.label}</div>
-        <div class="preview-tag">${item.folder}</div>
-      `;
+  previewTags.innerHTML = `
+    <div class="preview-tag">${colorMeta.label}</div>
+    <div class="preview-tag">${shapeMeta.label}</div>
+    <div class="preview-tag">${item.folder}</div>
+  `;
 
-      previewBox.classList.add("show");
-    }
+  const card = event.currentTarget;
+  const rect = card.getBoundingClientRect();
+
+  const previewWidth = 280;
+  const gap = 16;
+
+  let left = rect.right + gap;
+  let top = rect.top + (rect.height / 2) - 160;
+
+  if (left + previewWidth > window.innerWidth - 12) {
+    left = rect.left - previewWidth - gap;
+  }
+
+  if (left < 12) left = 12;
+
+  const maxTop = window.innerHeight - 340;
+  if (top < 12) top = 12;
+  if (top > maxTop) top = Math.max(12, maxTop);
+
+  previewBox.style.left = `${left}px`;
+  previewBox.style.top = `${top}px`;
+
+  previewBox.classList.add("show");
+}
 
     function hidePreview() {
       previewBox.classList.remove("show");
@@ -843,7 +869,7 @@
       });
 
       card.addEventListener("click", () => downloadItem(item));
-      card.addEventListener("mouseenter", () => showPreview(item));
+      card.addEventListener("mouseenter", (e) => showPreview(item, e));
       card.addEventListener("mouseleave", hidePreview);
 
       return card;
@@ -890,7 +916,7 @@
       grid.innerHTML = "";
       filtered.forEach(item => grid.appendChild(createCard(item)));
       emptyState.classList.toggle("show", filtered.length === 0);
-      resultText.textContent = `${filtered.length} / ${allItems.length} tâm ngắm`;
+      resultText.textContent = `Đang có ${filtered.length} / ${allItems.length} tâm ngắm. Đặc biệt sẽ Update liên tục ...`;
       syncActiveChips();
     }
 
@@ -938,26 +964,24 @@
     }
 
     async function init() {
-      try {
-        repoText.textContent = `${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo} • branch: ${GITHUB_CONFIG.branch}`;
-        const items = await loadAllFolders();
-        allItems = items;
+  try {
+    const items = await loadAllFolders();
+    allItems = items;
 
-        renderFolderFilters(allItems);
-        renderColorFilters();
-        renderShapeFilters();
-        renderAll();
+    renderFolderFilters(allItems);
+    renderColorFilters();
+    renderShapeFilters();
+    renderAll();
 
-        loadingBox.style.display = "none";
-      } catch (error) {
-        console.error(error);
-        loadingBox.style.display = "none";
-        resultText.textContent = "Không tải được dữ liệu.";
-        repoText.textContent = "Kiểm tra lại owner / repo / branch / folder";
-        emptyState.textContent = error.message;
-        emptyState.classList.add("show");
-      }
-    }
+    loadingBox.style.display = "none";
+  } catch (error) {
+    console.error(error);
+    loadingBox.style.display = "none";
+    resultText.textContent = "Không tải được dữ liệu.";
+    emptyState.textContent = error.message;
+    emptyState.classList.add("show");
+  }
+}
 
     searchInput.addEventListener("input", renderAll);
 
