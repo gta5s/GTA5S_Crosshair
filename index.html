@@ -917,7 +917,7 @@
       grid.innerHTML = "";
       filtered.forEach(item => grid.appendChild(createCard(item)));
       emptyState.classList.toggle("show", filtered.length === 0);
-      resultText.textContent = `Đang có ${filtered.length} / ${allItems.length} tâm ngắm. Đặc biệt sẽ Update liên tục ...`;
+      resultText.textContent = `Đang có ${filtered.length} / ${allItems.length} tâm ngắm. Đặc biệt sẽ update liên tục ...`;
       syncActiveChips();
     }
 
